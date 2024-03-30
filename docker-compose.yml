@@ -1,0 +1,47 @@
+version: '3.5'
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: project-nest
+    restart: unless-stopped
+    environment:
+      - DB_HOST=project-db
+      - DB_USER=admin
+      - DB_PASSWORD=123456aA@
+      - DB_DATABASE=project
+      - DB_PORT=3306
+      - MYSQL_ROOT_PASSWORD=123456aA@
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www
+    networks:
+      - project-network
+
+  db:
+    image: mysql:8.0.32
+    container_name: project-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456aA@
+      - DB_HOST=project-db
+      - DB_USER=admin
+      - DB_PASSWORD=123456aA@
+      - DB_DATABASE=project
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    ports:
+      - '3307:3306'
+    networks:
+      - project-network
+
+networks:
+  project-network:
+    driver: bridge
+
