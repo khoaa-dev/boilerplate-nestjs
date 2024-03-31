@@ -22,17 +22,13 @@ module.exports = {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'warn',
-    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-empty-function': 'error',
     '@typescript-eslint/no-inferrable-types': 'error',
 
     '@typescript-eslint/naming-convention': [
       'error',
-      {
-        selector: 'default',
-        format: ['camelCase'],
-      },
       {
         selector: 'variable',
         format: ['PascalCase', 'UPPER_CASE'],
@@ -61,6 +57,16 @@ module.exports = {
       {
         selector: 'enumMember',
         format: ['UPPER_CASE'],
+      },
+      {
+        selector: 'classProperty',
+        format: ['UPPER_CASE', 'snake_case'],
+        modifiers: ['requiresQuotes'],
+        filter: {
+          regex:
+            '_(URL|TYPE|HOST|PORT|PASSWORD|NAME|USERNAME|SYNCHRONIZE|MAX_CONNECTIONS|SSL_ENABLED|REJECT_UNAUTHORIZED|CA|KEY|CERT)$',
+          match: true,
+        },
       },
     ],
   },
